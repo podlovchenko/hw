@@ -36,16 +36,22 @@ module.exports = class {
         return this.data.length;
     }
 
-    keys() {
-        return this.data;
+    *keys() {
+        for (let item of this.data) {
+            yield item;
+        }
     }
 
-    values() {
-        return this.data;
+    *values() {
+        for (let item of this.data) {
+            yield item;
+        }
     }
 
-    entries() {
-        return this.data.map(item => [item, item]);
+    *entries() {
+        for (let item of this.data) {
+            yield [item, item];
+        }
     }
 
     clear() {
@@ -79,10 +85,8 @@ module.exports = class {
     }
 
     forEach(cb, data) {
-        data.getValue = function getValue() {
-            return data.value;
+        for (let item of this.data) {
+            cb.bind(data)(item);
         }
-
-        cb(data);
     }
 }
